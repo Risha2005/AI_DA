@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eligibility Checker</title>
+</head>
+<body>
+    <h1>Check Student Eligibility</h1>
+
+    <label for="student_id">Student ID:</label>
+    <input type="number" id="student_id" required>
+    <button onclick="checkEligibility()">Check Scholarship Eligibility</button>
+    <button onclick="checkExamPermission()">Check Exam Permission</button>
+
+    <p id="result"></p>
+
+    <script>
+        // Function to check scholarship eligibility
+        function checkEligibility() {
+            var studentId = document.getElementById('student_id').value;
+            fetch('http://localhost:8000/scholarship?student_id=' + studentId)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = `Scholarship Status: ${data.status}, Reason: ${data.reason}`;
+                })
+                .catch(error => console.log('Error:', error));
+        }
+
+        // Function to check exam permission
+        function checkExamPermission() {
+            var studentId = document.getElementById('student_id').value;
+            fetch('http://localhost:8000/exam?student_id=' + studentId)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('result').innerText = `Exam Permission: ${data.status}, Reason: ${data.reason}`;
+                })
+                .catch(error => console.log('Error:', error));
+        }
+    </script>
+</body>
+</html>
+
